@@ -1,3 +1,4 @@
+import os
 import sys
 from pathlib import Path
 
@@ -8,7 +9,7 @@ version_file = Path("version")
 
 
 def main():
-    authorization = input("Pass the authorization: ")
+    authorization = os.getenv("AUTHORIZATION", None) or input("Input the authorization: ")
     response = requests.get(RELEASES_URL, headers={"Authorization": authorization})
 
     if response.status_code != 200:
