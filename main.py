@@ -5,41 +5,28 @@ from pathlib import Path
 import requests
 
 RELEASES_URL = "https://discord.com/api/v9/social-sdk/releases"
+AUTHORIZATION = os.environ["AUTHORIZATION"]
 version_file = Path("version")
 
 
-def main():
-    authorization = os.getenv("AUTHORIZATION", None)
-
-    if not authorization:
-        print("Missing authorization", sys.stderr)
-        sys.exit(1)
-
-    response = requests.get(RELEASES_URL, headers={"Authorization": authorization})
+def discover_latest() -> str:
+    response = requests.get(RELEASES_URL, headers={"Authorization": AUTHORIZATION})
 
     if response.status_code != 200:
         print("Failed to get versions", sys.stderr)
-        print(response.status_code, sys.stderr)
-        print(response.content, sys.stderr)
-        print(response.headers, sys.stderr)
         sys.exit(1)
 
     content = response.json()
-    latest_version = content["latest_version"]
+    return content["latest_version"]
 
-    # if latest_version == version_file.read_text():
-    #     print("No new version", sys.stderr)
-    #     return
 
+def download_latest(latest_version: str) -> str:
     response = requests.get(
-        f"{RELEASES_URL}/{latest_version}", headers={"Authorization": authorization}
+        f"{RELEASES_URL}/{latest_version}", headers={"Authorization": AUTHORIZATION}
     )
 
     if response.status_code != 200:
         print("Failed to get artifacts", sys.stderr)
-        print(response.status_code, sys.stderr)
-        print(response.content, sys.stderr)
-        print(response.headers, sys.stderr)
         sys.exit(1)
 
     content = response.json()
@@ -50,6 +37,15 @@ def main():
     with open(filename, "wb") as f:
         for chunk in response.iter_content(chunk_size=256):
             f.write(chunk)
+
+    return filename
+
+
+def main():
+    latest_version = discover_latest()
+    filename = download_latest(latest_version)
+
+    print(filename)
 
     version_file.write_text(latest_version)
 
