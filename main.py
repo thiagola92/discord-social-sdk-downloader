@@ -10,6 +10,11 @@ version_file = Path("version")
 
 def main():
     authorization = os.getenv("AUTHORIZATION", None)
+
+    if not authorization:
+        print("Missing environment variable")
+        return
+
     response = requests.get(RELEASES_URL, headers={"Authorization": authorization})
 
     if response.status_code != 200:
