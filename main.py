@@ -12,8 +12,8 @@ def main():
     authorization = os.getenv("AUTHORIZATION", None)
 
     if not authorization:
-        print("Missing environment variable")
-        return
+        print("Missing authorization", sys.stderr)
+        sys.exit(1)
 
     response = requests.get(RELEASES_URL, headers={"Authorization": authorization})
 
@@ -22,14 +22,14 @@ def main():
         print(response.status_code, sys.stderr)
         print(response.content, sys.stderr)
         print(response.headers, sys.stderr)
-        return
+        sys.exit(1)
 
     content = response.json()
     latest_version = content["latest_version"]
 
-    if latest_version == version_file.read_text():
-        print("No new version")
-        return
+    # if latest_version == version_file.read_text():
+    #     print("No new version", sys.stderr)
+    #     return
 
     response = requests.get(
         f"{RELEASES_URL}/{latest_version}", headers={"Authorization": authorization}
@@ -40,7 +40,7 @@ def main():
         print(response.status_code, sys.stderr)
         print(response.content, sys.stderr)
         print(response.headers, sys.stderr)
-        return
+        sys.exit(1)
 
     content = response.json()
     download_url = content["artifacts"][0]["download_url"]
