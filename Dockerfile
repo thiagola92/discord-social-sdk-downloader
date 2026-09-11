@@ -22,7 +22,7 @@ RUN rm godot.zip
 RUN mv Godot_v* godot
 
 # Clone SDK downloader.
-RUN git clone --filter=blob:none --recurse-submodules https://github.com/thiagola92/discord-social-sdk-downloader.git
+RUN git clone --filter=blob:none --recurse-submodules "https://github.com/thiagola92/discord-social-sdk-downloader.git"
 RUN uv python install 3.13
 RUN cd discord-social-sdk-downloader && uv python pin 3.13 && uv sync
 

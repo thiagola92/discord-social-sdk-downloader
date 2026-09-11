@@ -7,13 +7,14 @@ uv sync
 
 # Usage
 ```
-uv run --env-file=.env main.py
+export AUTHORIZATION=get_in_your_browser_request_when_accessing_the_portal
+uv run main.py
 ```
 
 # Container
 ```
-sudo docker image build --tag testing .
-sudo docker container create --name testing testing
-sudo docker container start testing
-sudo docker container exec --interactive --tty testing bash
+sudo docker image build --no-cache --tag discord-social-sdk .
+sudo docker container create --name discord-social-sdk discord-social-sdk
+sudo docker container start discord-social-sdk
+sudo docker container exec --interactive --tty discord-social-sdk bash
 ```
