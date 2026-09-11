@@ -9,7 +9,7 @@ version_file = Path("version")
 
 
 def main():
-    authorization = os.getenv("AUTHORIZATION", None) or input("Input the authorization: ")
+    authorization = os.getenv("AUTHORIZATION", None)
     response = requests.get(RELEASES_URL, headers={"Authorization": authorization})
 
     if response.status_code != 200:
