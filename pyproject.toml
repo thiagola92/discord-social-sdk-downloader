@@ -1,7 +1,7 @@
 [project]
-name = "discord-social-sdk-ci-cd"
+name = "discord-social-sdk-downloader"
 version = "0.1.0"
-description = "Add your description here"
+description = "Download Discord Social SDK"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [

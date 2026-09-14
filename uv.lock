@@ -127,7 +127,7 @@ wheels = [
 ]
 
 [[package]]
-name = "discord-social-sdk-ci-cd"
+name = "discord-social-sdk-downloader"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

@@ -1,10 +1,9 @@
 FROM fedora:43
 USER root
 
-WORKDIR workspace
+WORKDIR /workspace
 
 # Install prerequisites for container
-RUN dnf install -y git
 RUN dnf install -y uv
 
 # Install prerequisites for GDExtension.
@@ -21,10 +20,10 @@ RUN unzip godot.zip
 RUN rm godot.zip
 RUN mv Godot_v* godot
 
-# Clone SDK downloader.
-RUN git clone --filter=blob:none --recurse-submodules "https://github.com/thiagola92/discord-social-sdk-downloader.git"
+# Setup SDK downloader.
+COPY .python-version main.py pyproject.toml uv.lock version discord-social-sdk-downloader/
 RUN uv python install 3.13
-RUN cd discord-social-sdk-downloader && uv python pin 3.13 && uv sync
+RUN cd discord-social-sdk-downloader && uv sync
 
 # Don't stop container.
 CMD ["sleep", "infinity"]
