@@ -21,5 +21,6 @@ sudo docker container start discord-social-sdk
 sudo docker container exec --interactive --tty discord-social-sdk bash
 
 # Publish image.
+sudo docker image tag discord-social-sdk ghcr.io/thiagola92/discord-social-sdk:latest
 sudo docker push ghcr.io/thiagola92/discord-social-sdk:latest
 ```
