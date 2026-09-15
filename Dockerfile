@@ -3,11 +3,11 @@ USER root
 
 WORKDIR /workspace
 
-# Install prerequisites for container
+# Install prerequisites for this container
 RUN dnf install -y git
 RUN dnf install -y uv
 
-# Install prerequisites for GDExtension.
+# Install prerequisites for the GDExtension.
 RUN dnf install -y python3-scons
 RUN dnf install -y libstdc++-static
 RUN dnf install -y clang
