@@ -4,6 +4,7 @@ USER root
 WORKDIR /workspace
 
 # Install prerequisites for container
+RUN dnf install -y git
 RUN dnf install -y uv
 
 # Install prerequisites for GDExtension.

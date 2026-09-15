@@ -10,7 +10,7 @@ export AUTHORIZATION=get_in_your_browser_request_when_accessing_the_portal
 uv run main.py
 ```
 
-# Container 
+# Container
 ```bash
 # Create image.
 sudo docker image build --tag discord-social-sdk .
@@ -23,4 +23,17 @@ sudo docker container exec --interactive --tty discord-social-sdk bash
 # Publish image.
 sudo docker image tag discord-social-sdk ghcr.io/thiagola92/discord-social-sdk:latest
 sudo docker push ghcr.io/thiagola92/discord-social-sdk:latest
+```
+
+# Action
+```yml
+jobs:
+  job-name:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/thiagola92/discord-social-sdk:latest
+      env:
+        AUTHORIZATION: ${{ secrets.AUTHORIZATION }}
+    steps:
+      - run: cd /workspace/discord-social-sdk-downloader && uv run main.py
 ```
